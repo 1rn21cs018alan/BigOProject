@@ -1,8 +1,6 @@
 import cv2 as cv
 
-img=cv.imread('Capture.png')
 
-#cv.imshow('Cat',img)
 vidfilename="Seoul - 21985.mp4"
 count =0
 speed=2

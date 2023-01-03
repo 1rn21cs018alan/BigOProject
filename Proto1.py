@@ -4,7 +4,7 @@ img=cv.imread('Capture.png')
 
 #cv.imshow('Cat',img)
 filename="Seoul - 21985.mp4"
-count =0
+count =0 
 speed=2
 speed=(int)(input("Enter speed\n"))
 timegap=(int)(20/speed)
@@ -14,7 +14,7 @@ while(True):
     isTrue, frame=capture.read()
     cv.imshow('Video',frame)
     count+=1
-    if(count==7619):
+    if(count==400):
         break;
     if(count%speed<3):
         if cv.waitKey(timegap) & 0xFF==ord('d'): 
