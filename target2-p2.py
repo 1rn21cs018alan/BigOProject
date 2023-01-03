@@ -37,7 +37,7 @@ while(True):
     
     if(count%frameskip==0):
         frame=rescale(frame,scale)
-        if(count==0)
+        if(count==frameskip):
             prevframe=frame
         filename=path+"\\IMG"+str(filecount)+".png"
         filecount+=1
@@ -47,6 +47,9 @@ while(True):
         gray=cv.cvtColor(frame,cv.COLOR_BGR2GRAY)
         dif=cv.subtract(prevgray,gray)
         cv.imshow('difference video',dif)
+        prevframe=frame
+        if( cv.waitKey(25) & 0xFF==ord('d')):
+            break;
         
         
         #cv.imwrite(filename,frame)
