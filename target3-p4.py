@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
 import time
-
+import copy
 
 # trying to find motion also
 
@@ -30,24 +30,26 @@ def main():
     frameskip=(int)(input("Enter how many frames to skip after each pick\n"))
     frameskip+=1
 
-    Kernelsize=5;  #to adjust amount of blur
+    Kernelsize=7;  #to adjust amount of blur
 
 
-    # capture = cv.VideoCapture(vidfilename)
-    capture = cv.VideoCapture(0)
+    capture = cv.VideoCapture(vidfilename)
+    # capture = cv.VideoCapture(0)
 
 
     error=0
 
-    length=int(capture.get(cv.CAP_PROP_FRAME_COUNT))
-    print(length)
+    # length=int(capture.get(cv.CAP_PROP_FRAME_COUNT))
+    # print(length)
     
-    speed=2
-    speed=(float)(input("Enter speed multiplier for live feed\n"))
-    timegap=(int)(20.0/speed)
+    # speed=2
+    # speed=(float)(input("Enter speed multiplier for live feed\n"))
+    timegap=20
 
     thres=10
-    
+    x1,y1,w1,h1=(100,100,200,200)
+    track=(x1,y1,w1,h1)
+    term=(cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT,10,1)
     # fps = capture.get(cv.CAP_PROP_FPS)
     while(True):
         isTrue, frame=capture.read()
@@ -66,20 +68,30 @@ def main():
             cv.imshow('Current video',frame)
             # cv.imshow('previous video',prevframe)
             # prevgray=cv.cvtColor(prevframe,cv.COLOR_BGR2GRAY)
-            # gray=cv.cvtColor(frame,cv.COLOR_BGR2GRAY)
+            gray=cv.cvtColor(frame,cv.COLOR_BGR2GRAY)
             # dif=cv.absdiff(prevgray,gray)
             dif=cv.absdiff(prevframe,frame)
             dif=cv.cvtColor(dif,cv.COLOR_BGR2GRAY)
-            blur = cv.GaussianBlur(dif, (Kernelsize, Kernelsize), 0) 
-            _, thresh = cv.threshold(blur,thres, 255, cv.THRESH_BINARY) 
-            error=finderr(dif)
+            canny=cv.Canny(gray,80,255)
+            _,hist1=cv.meanShift(canny,track,term)
+            x1,y1,w1,h1=hist1
+            track=hist1
+            # print(gray.shape)
+            # blur = cv.GaussianBlur(dif, (Kernelsize, Kernelsize), 0) 
+            # _, thresh = cv.threshold(blur,thres, 255, cv.THRESH_BINARY) 
+            
+            hist=copy.deepcopy(frame)
+            hist=cv.rectangle(hist,(x1,y1),(x1+w1,y1+h1),255,3)
+            # error=finderr(dif)
             # print(error)
             # if(error>1):
             #     print("\n",error,"\t",filecount)
             #     cv.imwrite(filename1,dif)
             #     cv.imwrite(filename,frame)
             cv.imshow('difference video',dif)
-            cv.imshow('blur video',thresh)
+            cv.imshow('blur video',canny)
+            cv.imshow('tracking window',hist)
+            # contour,hierchy=cv.find
             prevframe=frame
             if( cv.waitKey(timegap) & 0xFF==ord('d')):
                 break;
