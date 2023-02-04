@@ -66,12 +66,7 @@ def main():
             filename1=path+"\\DIF"+str(filecount)+".png"
             filecount+=1
             cv.imshow('Current video',frame)
-            # cv.imshow('previous video',prevframe)
-            # prevgray=cv.cvtColor(prevframe,cv.COLOR_BGR2GRAY)
             gray=cv.cvtColor(frame,cv.COLOR_BGR2GRAY)
-            # dif=cv.absdiff(prevgray,gray)
-            dif=cv.absdiff(prevframe,frame)
-            dif=cv.cvtColor(dif,cv.COLOR_BGR2GRAY)
             canny=cv.Canny(gray,80,255)
             _,hist1=cv.meanShift(canny,track,term)
             x1,y1,w1,h1=hist1
@@ -88,10 +83,8 @@ def main():
             #     print("\n",error,"\t",filecount)
             #     cv.imwrite(filename1,dif)
             #     cv.imwrite(filename,frame)
-            cv.imshow('difference video',dif)
             cv.imshow('blur video',canny)
             cv.imshow('tracking window',hist)
-            # contour,hierchy=cv.find
             prevframe=frame
             if( cv.waitKey(timegap) & 0xFF==ord('d')):
                 break;
