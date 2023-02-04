@@ -39,10 +39,10 @@ def main():
     choice=int(al[4])
     frameskip+=1
     print("started",vidfilename,"-")
-    # if(choice==0):
-    capture = cv.VideoCapture(vidfilename)
-    # else:
-        # capture = cv.VideoCapture(0)
+    if(choice==0):
+        capture = cv.VideoCapture(vidfilename)
+    else:
+        capture = cv.VideoCapture(0)
     
     outOfBound=True
     term=(cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT,10,1)
@@ -55,6 +55,8 @@ def main():
             break
         
         if(count%frameskip==0):
+            if(choice==1):
+                frame=cv.flip(frame,1)
             frame=rescale(frame,scale)
             if(count==frameskip):
                 prevframe=cv.cvtColor(frame,cv.COLOR_BGR2GRAY)
