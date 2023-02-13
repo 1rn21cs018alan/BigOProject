@@ -1,0 +1,15 @@
+0.5
+0
+20
+TestVid4.mp4
+0
+0.8
+
+
+
+1st line is Frame scaling for calculation
+2nd line is no of frames to skip after each step
+3rd line is timegap between each frame displayed
+4th line is name of video to process
+5th line is bit showing 0 if oyu want to use the video or 1 if you want to use live cam
+6th line is the page border, aka after traversing how much of the screen shall we take a new page in percentage, 0.8=80% of the page

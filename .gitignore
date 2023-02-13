@@ -1,2 +1,7 @@
 .venv
 s.txt
+BigO Project.code-workspace
+__pycache__
+misc.py
+misc2.py
+misc2nolive.py
