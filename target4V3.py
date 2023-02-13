@@ -234,6 +234,7 @@ def main():
     vidfilename=str(al[3])
     vidfilename=vidfilename.strip()
     choice=int(al[4])
+    pageBorder=float(al[5])
     frameskip+=1
     filename=path+"\\IMG1.png"
     print("started",vidfilename,"-")
